@@ -34,8 +34,10 @@ export default function useCategoryLogic () {
   }
 
   useEffect(() => {
-    console.log("categories:", categories)
-    fetchAllCategories();
+    const timeout = setTimeout(() => {
+      fetchAllCategories();
+    }, 500); // call api after 0.5 seconds of no typing
+    return () => clearTimeout(timeout);
   }, [pageSize, pageNum, search]
   );
   
@@ -70,7 +72,9 @@ export default function useCategoryLogic () {
         category_response && showToast(`${formData.name} updated successfuly.`, "success");
       }
 
-      resetForm();
+      setFormData({name: "", description: ""});
+      setErrors({});
+      setMode("add");
       fetchAllCategories();
     }
     catch (error) {
