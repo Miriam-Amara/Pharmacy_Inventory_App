@@ -37,11 +37,7 @@ export const SearchCategory = ({search, setSearch}) => {
         type="text"
         name="search"
         value={search}
-        onChange={(e) => {
-          const value = e.target.value
-          if (value.length <= 8 && value.length % 2 === 0) {
-          setSearch(value)}
-        }}
+        onChange={(e) => {setSearch(e.target.value)}}
       />
     </>
   );
