@@ -1,16 +1,18 @@
 import axios from "axios";
 
+import { showToast } from "../utils/toast";
+
 
 export async function addCategoryApi(categoryData) {
   try{
     let response = await axios.post("/api/v1/categories", categoryData);
-    console.log(response.status);
-    console.log(response.data);
     return response.data
   }
   catch (error) {
-    console.log(error.response.status);
-    console.log(error.response.data);
+    if (error.response)
+      showToast(error?.response?.data?.error || "Error adding category", "error");
+    else
+      console.error("error: ", error);
   }
 }
 
@@ -21,13 +23,13 @@ export async function updateCategoryApi(categoryData, category_id) {
       categoryData,
       {withCredentials: true}
     );
-    console.log(response.status);
-    console.log(response.data);
     return response.data
   }
   catch (error) {
-    console.log(error.response.status);
-    console.log(error.response.data);
+    if (error.response)
+      showToast(error?.response?.data?.error || "Error updating category", "error");
+    else
+      console.error("error: ", error);
   }
 }
 
@@ -36,14 +38,17 @@ export async function fetchCategoryApi(category_id) {
     let response = await axios.get(
       `api/v1/categories/${category_id}`,
       {withCredentials: true}
-    )
-    console.log(response.status);
-    console.log(response.data);
+    )    
     return response.data;
   }
   catch (error) {
-    console.log(error.response.status);
-    console.log(error.response.data);
+    if (error.response) {
+      showToast(
+      error?.response?.data?.error ||
+      "Error fetching category. Please contact admin.", "error"
+    );}
+    else
+      console.error("error: ", error);
   }
 }
 
@@ -59,27 +64,33 @@ export async function fetchAllCategoriesApi(pageSize, pageNum, search) {
         params: {search: search || ""}
       }
   )
-    console.log(response.status);
-    console.log(response.data);
     return response.data;
   }
   catch (error) {
-    console.log(error.response.status);
-    console.log(error.response.data);
+    if (error.response) {
+      showToast(
+      error?.response?.data?.error ||
+      "Error fetching categories. Please contact admin.", "error"
+    );}
+    else
+      console.error("error: ", error);
   }
 }
 
 export async function deleteCategoryApi(category_id) {
   try{
-    let response = await axios.delete(
+    await axios.delete(
       `api/v1/categories/${category_id}`,
       {withCredentials: true}
     )
-    console.log(response.status);
-    console.log(response.data);
   }
   catch (error) {
-    console.log(error.response.status);
-    console.log(error.response.data);
+    if (error.response) {
+      showToast(
+      error?.response?.data?.error ||
+      "Error deleting category. Please contact admin.", "error"
+    );}
+    else
+      console.error("error: ", error); 
   }
 }
