@@ -93,14 +93,30 @@ export const profileUpdateValidationSchema = yup.object(
 
 export const productValidationSchema = yup.object(
   {
+    barcode: yup.string().max(20, "Maximum of 20 characters."),
     name: yup.string()
       .required("Product name is required.")
       .min(3, "Minimum of 3 characters.")
       .max(200, "Maximum of 200 characters."),
-    selling_price: yup.number()
-      .required("Selling price is required."),
+    unit_cost_price: yup.number()
+    .required("unit cost price is required."),
+    unit_selling_price: yup.number()
+      .required("unit selling price is required."),
     category_id: yup.string()
+    .required()
+    .length(36, "Category_id must be exactly 36 characters long."),
+    brand_id: yup.string(),
+    brand_name: yup.string().max(200),
+    created_at: yup.date().nullable(),
+    last_updated: yup.date().nullable(),
+
   }
-);
+).test(
+  'Brand name is required.',
+  (obj) => {
+    // obj is the entire object with all fields
+    return (obj.brand_id?.trim() || obj.brand_name?.trim());
+  }
+)
 
 
