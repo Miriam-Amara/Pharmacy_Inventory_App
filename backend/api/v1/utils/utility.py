@@ -124,7 +124,7 @@ class DatabaseOp:
             if isinstance(e.orig, UniqueViolation):
                 detail = e.orig.diag.message_detail
                 if detail:
-                    detail = detail.replace("Key ", "")
+                    detail = detail.replace("Key (name)=", "")
                 abort(409, description=detail)
             else:
                 logger.error(f"Database operation failed: {e}")
