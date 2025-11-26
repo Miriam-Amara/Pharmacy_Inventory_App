@@ -4,12 +4,12 @@ import { useState, useEffect } from "react";
 
 import { brandValidationSchema } from "../utils/formInputValidation";
 import {
-  addBrand,
-  getBrand,
-  getAllBrands,
-  updateBrand,
-  deleteBrand
-} from "../api/brand";
+  addBrandApi,
+  fetchBrandApi,
+  fetchAllBrandsApi,
+  updateBrandApi,
+  deleteBrandApi,
+} from "../api/brands";
 import { showToast } from "../utils/toast";
 
 
@@ -31,7 +31,7 @@ function useBrandLogic() {
 
   const fetchBrands = async () => {
     setLoading(true);
-    const allBrands = await getAllBrands(pageSize, pageNum);
+    const allBrands = await fetchAllBrandsApi(pageSize, pageNum);
     setBrands(Array.isArray(allBrands) ? allBrands : []);
     setLoading(false);
   };
@@ -70,14 +70,14 @@ function useBrandLogic() {
     if (!window.confirm(`Are you sure you want to delete ${brand.name}?`))
       return;
 
-    await deleteBrand(brand.id);
+    await deleteBrandApi(brand.id);
     await fetchBrands();
   };
 
   const handleEdit = async (brand) => {
     setFormMode("edit");
     setShowForm(true);
-    const freshBrand = await getBrand(brand.id);
+    const freshBrand = await fetchBrandApi(brand.id);
     setFormData(freshBrand);
   };
   
@@ -87,11 +87,11 @@ function useBrandLogic() {
       await brandValidationSchema.validate(formData, {abortEarly: false})
 
       if (formMode === "add") {
-        const brand_data = await addBrand(formData);
+        const brand_data = await addBrandApi(formData);
         brand_data && showToast(`${formData.name} added successfully`, "success")
       }
       else {
-        await updateBrand(formData.id, formData);
+        await updateBrandApi(formData.id, formData);
         showToast(`${formData.name} updated successfully`, "success")
       }
 

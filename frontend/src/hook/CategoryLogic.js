@@ -18,7 +18,7 @@ export default function useCategoryLogic () {
   const [formData, setFormData] = useState({name: "", description: ""});
   const [errors, setErrors] = useState({});
   const [mode, setMode] = useState("add");
-  const [showForm, SetShowForm] = useState(false);
+  const [showForm, setShowForm] = useState(false);
 
   const [pageSize, setPageSize] = useState(5);
   const [pageNum, setPageNum] = useState(1);
@@ -45,7 +45,7 @@ export default function useCategoryLogic () {
     setFormData({name: "", description: ""});
     setErrors({});
     setMode("add");
-    SetShowForm(false);
+    setShowForm(false);
   };
 
   const handleChange = (e) => {
@@ -54,7 +54,7 @@ export default function useCategoryLogic () {
   };
 
   /*
-    - on form submit makes either post or put request.
+    - on form submit validates formData and makes either post or put request.
     - resets form
     - fetches all categories
   */
@@ -63,11 +63,11 @@ export default function useCategoryLogic () {
     try{
       await categoryValidationSchema.validate(formData, {abortEarly: false});
 
-      if (mode == "add") {
+      if (mode === "add") {
         const category_response = await addCategoryApi(formData);
         category_response && showToast(`${formData.name} added successfuly.`, "success");
       }
-      else if (mode == "edit") {
+      else if (mode === "edit") {
         const category_response = await updateCategoryApi(formData, formData.id);
         category_response && showToast(`${formData.name} updated successfuly.`, "success");
       }
@@ -91,7 +91,7 @@ export default function useCategoryLogic () {
   // fetches fresh category details and sets formData with the details.
   const handleEdit = async (category) => {
     setMode("edit");
-    SetShowForm(true);
+    setShowForm(true);
 
     const fresh_category = await fetchCategoryApi(category.id)
     fresh_category && setFormData(fresh_category);
@@ -114,7 +114,7 @@ export default function useCategoryLogic () {
     formData, setFormData,
     errors, setErrors,
     mode, setMode,
-    showForm, SetShowForm,
+    showForm, setShowForm,
     pageSize, setPageSize,
     pageNum, setPageNum,
     categories, setCategories,

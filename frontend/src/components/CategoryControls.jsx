@@ -2,10 +2,10 @@
 
 
 // returns a button which onClick displays form to add category
-export const AddCategory = ({setMode, SetShowForm}) => (
+export const AddCategory = ({setMode, setShowForm}) => (
     <button
       type="button"
-      onClick={() => {setMode("add"), SetShowForm(true);}}
+      onClick={() => {setMode("add"); setShowForm(true);}}
     >
       Add Category
     </button>
