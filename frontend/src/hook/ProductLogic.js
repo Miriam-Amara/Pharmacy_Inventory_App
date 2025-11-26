@@ -18,7 +18,17 @@ import {
 
 
 export default function useProductLogic() {
-  const [formData, setFormData] = useState();
+  const [formData, setFormData] = useState({
+    barcode: "",
+    name: "",
+    unit_cost_price: "",
+    unit_selling_price: "",
+    category_id: "",
+    brand_id: "",
+    brand_name: "",
+    created_at: "",
+    last_updated: "",
+  });
   const [errors, setErrors] = useState({});
   const [mode, setMode] = useState("add");
   const [showForm, setShowForm] = useState(false);
@@ -35,29 +45,36 @@ export default function useProductLogic() {
 
   const [displayType, setDisplayType] = useState("table");
 
-  setFormData({
-    barcode: "",
-    name: "",
-    unit_cost_price: "",
-    unit_selling_price: "",
-    category_id: "",
-    brand_id: "",
-    brand_name: "",
-    created_at: "",
-    last_updated: "",
-  })
 
   const fetchAllProducts = async () => {
     const allProducts = await fetchAllProductsApi(pageSize, pageNum, search);
-    setProducts(Array.isArray(allProducts) ? allProducts : []);
+    setProducts(allProducts ?? []);
   };
 
   useEffect(() => {
+    const fetchData = async () => {
+      if (search.trim() !== "") {
+        await fetchAllProducts();
+      }
+      else if (brand.brand_id !== "" || category.category_id !== "") {
+        const filteredProducts = await fetchFilteredProductsByBrandAndCategory(
+            brand.brand_id,
+            category.category_id,
+            pageSize,
+            pageNum
+          );
+          setProducts(filteredProducts ?? [])
+      }
+      else {
+        await fetchAllProducts();
+      }
+    }
+
     const timeout = setTimeout(() => {
-      fetchAllProducts();
-    }, 500);
+      fetchData();
+    }, 500)
     return () => clearTimeout(timeout);
-  }, [pageSize, pageNum, search]
+  }, [brand.brand_id, category.category_id, pageSize, pageNum, search]
   );
 
   const resetForm = () => {
@@ -91,21 +108,23 @@ export default function useProductLogic() {
   const handleSubmit = async (e) => {
     e.preventDefault()
     try {
-      await productValidationSchema.validate(formData, {abortEarly: false})
+      const validData = await productValidationSchema.validate(
+        formData, {abortEarly: false}
+      )
 
       if (mode === "add") {
-        const productResponse = await addProductApi(formData);
+        const productResponse = await addProductApi(validData);
         productResponse && showToast(`${formData.name} added successfully`, "success");
       }
       else if (mode === "edit") {
-        const productResponse = await updateProductApi(formData, formData.id);
+        const productResponse = await updateProductApi(validData, validData.id);
         productResponse && showToast(`${formData.name} added successfully`, "success");
       }
       fetchAllProducts();
       resetForm();
     }
     catch (error) {
-      console.error("Error: ", error)
+      console.error("Error in handleSubmit: ", error.inner)
       if (error.inner) {
         const newError = {}
         for (const err of error.inner)
@@ -128,18 +147,34 @@ export default function useProductLogic() {
   const handleDelete = async (product) => {
     if (!window.confirm(`Are you sure you want to delete ${product.name}?`))
       return;
-    await deleteProductApi();
+    await deleteProductApi(product.id);
     fetchAllProducts();
   };
 
   const handleFetchBrands = async () => {
-    const allBrands = await fetchAllBrandsApi(null, null);
-    setBrands(Array.isArray(allBrands) ? allBrands : []);
+    const allBrands = await fetchAllBrandsApi(0, 0);
+    if (Array.isArray(allBrands)) {
+      const sortedBrands = allBrands.sort(
+        (a, b) => a.name.localeCompare(b.name)
+      );
+      setBrands(sortedBrands);
+    }
+    else {
+      setBrands([]);
+    }
   }
 
   const handleFetchCategories = async () => {
-    const allCategories = await fetchAllCategoriesApi(null, null);
-    setCategories(Array.isArray(allCategories) ? allCategories : []);
+    const allCategories = await fetchAllCategoriesApi(0, 0);
+    if (Array.isArray(allCategories)) {
+      const sortedCategories = allCategories.sort(
+        (a, b) => a.name.localeCompare(b.name)
+      );
+      setCategories(sortedCategories);
+    }
+    else {
+      setCategories([]);
+    }
   }
 
   const handleFetchFilteredProducts = (e, type) => {
@@ -150,17 +185,6 @@ export default function useProductLogic() {
     else if (type === "category")
       setCategory({[name]: value})
   }
-
-  useEffect(() => {
-      async function fetchData () {
-        const filteredProducts = await fetchFilteredProductsByBrandAndCategory(
-          brand.brand_id, category.category_id, pageSize, pageNum
-        );
-        setProducts(filteredProducts ?? [])
-      }
-      fetchData();
-    }, [brand.brand_id, category.category_id, pageSize, pageNum])
-
 
   return ({
     formData, setFormData,
