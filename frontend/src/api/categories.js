@@ -54,8 +54,8 @@ export async function fetchCategoryApi(category_id) {
 
 export async function fetchAllCategoriesApi(pageSize, pageNum, search) {
   try{
-    pageSize = pageSize || 5
-    pageNum = pageNum || 1
+    pageSize = pageSize ?? 5
+    pageNum = pageNum ?? 1
 
     let response = await axios.get(
       `api/v1/categories/${pageSize}/${pageNum}`,
@@ -67,11 +67,8 @@ export async function fetchAllCategoriesApi(pageSize, pageNum, search) {
     return response.data;
   }
   catch (error) {
-    if (error.response) {
-      showToast(
-      error?.response?.data?.error ||
-      "Error fetching categories. Please contact admin.", "error"
-    );}
+    if (error.response)
+      console.log("error in fetchAllCategoriesApi: ", error.response.data.error)
     else
       console.error("error: ", error);
   }
