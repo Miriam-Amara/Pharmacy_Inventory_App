@@ -99,12 +99,18 @@ export const productValidationSchema = yup.object(
       .min(3, "Minimum of 3 characters.")
       .max(200, "Maximum of 200 characters."),
     unit_cost_price: yup.number()
-    .required("unit cost price is required."),
+      .number()
+      .transform((value, originalValue) => (originalValue === '' ? undefined : value))
+      .moreThan(0, "unit cost price must be greater than zero.")
+      .required("unit cost price is required."),
     unit_selling_price: yup.number()
+      .number()
+      .transform((value, originalValue) => (originalValue === '' ? undefined : value))
+      .moreThan("unit selling price must be greater than zero.")
       .required("unit selling price is required."),
     category_id: yup.string()
-    .required()
-    .length(36, "Category_id must be exactly 36 characters long."),
+      .required()
+      .length(36, "Category_id must be exactly 36 characters long."),
     brand_id: yup.string(),
     brand_name: yup.string().max(200),
     created_at: yup.date().nullable(),
