@@ -63,13 +63,17 @@ def get_all_brands(page_size: int, page_num: int):
     Retrieves all brands with pagination.
     """
     date_time = request.args.get("date_time")
+    search_term = request.args.get("search")
 
-    if not page_size or not page_num:
-        abort(400, description="Page Size and page number must be greater than 0.")
+    if search_term:
+        brands = storage.search(
+            Brand, search_term, page_size=page_size, page_num=page_num
+        )
+    else:
+        brands = storage.all(
+            Brand, page_size=page_size, page_num=page_num, date_time=date_time
+        )
 
-    brands = storage.all(
-        Brand, page_size=page_size, page_num=page_num, date_time=date_time
-    )
     if not brands:
         abort(404, description="No brand found")
 
