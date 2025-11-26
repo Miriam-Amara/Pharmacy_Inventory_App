@@ -15,7 +15,7 @@ class Product(BaseModel, Base):
 
     __tablename__ = "products"
 
-    barcode = mapped_column(String(20), unique=True)
+    barcode = mapped_column(String(20))
     image_filepath = mapped_column(String(300), unique=True)
     name = mapped_column(String(500), nullable=False, unique=True)
     category_id = mapped_column(
