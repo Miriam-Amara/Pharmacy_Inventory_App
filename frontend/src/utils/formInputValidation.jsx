@@ -99,25 +99,33 @@ export const productValidationSchema = yup.object(
       .min(3, "Minimum of 3 characters.")
       .max(200, "Maximum of 200 characters."),
     unit_cost_price: yup.number()
-      .number()
       .transform((value, originalValue) => (originalValue === '' ? undefined : value))
       .moreThan(0, "unit cost price must be greater than zero.")
       .required("unit cost price is required."),
     unit_selling_price: yup.number()
-      .number()
       .transform((value, originalValue) => (originalValue === '' ? undefined : value))
-      .moreThan("unit selling price must be greater than zero.")
+      .moreThan(0, "unit selling price must be greater than zero.")
       .required("unit selling price is required."),
     category_id: yup.string()
       .required()
       .length(36, "Category_id must be exactly 36 characters long."),
-    brand_id: yup.string(),
-    brand_name: yup.string().max(200),
-    created_at: yup.date().nullable(),
-    last_updated: yup.date().nullable(),
+    brand_id: yup.string()
+      .transform((value, originalValue) => (originalValue === "" ? null : value))
+      .nullable(),
+    brand_name: yup.string()
+      .transform((value, originalValue) => (originalValue === "" ? null : value))
+      .max(200)
+      .nullable(),
+    created_at: yup.date()
+      .transform((value, originalValue) => (originalValue === "" ? null : value))
+      .nullable(),
+    last_updated: yup.date()
+      .transform((value, originalValue) => (originalValue === "" ? null : value))
+      .nullable(),
 
   }
 ).test(
+  'brand-validation',
   'Brand name is required.',
   (obj) => {
     // obj is the entire object with all fields
