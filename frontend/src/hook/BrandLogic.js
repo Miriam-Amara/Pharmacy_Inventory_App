@@ -96,7 +96,9 @@ function useBrandLogic() {
       }
 
       await fetchBrands();
-      resetForm();
+      setFormData({name: "", is_active: true});
+      setErrors({});
+      setFormMode("add");
     }
     catch (error) {
       console.error("Error in handle submit", error);
