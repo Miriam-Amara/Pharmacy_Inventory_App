@@ -19,7 +19,7 @@ function CategoryPage() {
   const {
     formData, errors,
     mode, setMode,
-    showForm, SetShowForm,
+    showForm, setShowForm,
     pageSize, setPageSize,
     // pageNum, setPageNum,
     categories,
@@ -36,13 +36,13 @@ function CategoryPage() {
       {/* Title Section */}
       <section>
         <h3>Categories</h3>
-        <p>Add, delete, edit and view categories</p>
+        <p>Add, delete, edit and view categories.</p>
       </section>
 
       {/* Control Section */}
       <section>
         <div>
-          <AddCategory setMode={setMode} SetShowForm={SetShowForm} />
+          <AddCategory setMode={setMode} setShowForm={setShowForm} />
           {showForm && <DisplayCategoryFormModal 
             formData={formData}
             errors={errors}
