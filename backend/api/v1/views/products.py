@@ -95,10 +95,17 @@ def get_all_products(page_size: int, page_num: int):
     Get paginated list of products.
     """
     date_time = request.args.get("date_time")
+    search_term = request.args.get("search")
 
-    products = storage.all(
-        Product, page_size=page_size, page_num=page_num, date_time=date_time
-    )
+    if search_term:
+        products = storage.search(
+            Product, search_term, page_size=page_size, page_num=page_num
+        )
+    else:
+        products = storage.all(
+            Product, page_size=page_size, page_num=page_num, date_time=date_time
+        )
+
     if not products:
         abort(404, description="No product found")
 
