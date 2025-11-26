@@ -9,19 +9,26 @@ import {
   SearchProduct,
   Pagination,
 } from "../../components/ProductControls";
+import {
+  DisplayProductFormModal,
+  DisplayProductsTable,
+  DisplayProductsReorderingPoint,
+  DisplayProductsGrid,
+  DisplayProductDetailsModal
+} from "../../components/ProductDisplay";
 
 
 export default function ProductPage() {
   const {
-    formData, setFormData,
-    errors, setErrors,
+    formData,
+    errors,
+    brand,
+    brands,
+    category,
+    categories,
+    products,
     mode, setMode,
     showForm, setShowForm,
-    brand, setBrand,
-    brands, setBrands,
-    category, setCategory,
-    categories, setCategories,
-    products, setProducts,
     selectedProduct, setSelectedProduct,
     pageSize, setPageSize,
     // pageNum, setPageNum,
