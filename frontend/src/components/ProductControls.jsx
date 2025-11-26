@@ -20,7 +20,7 @@ export const FilterProductByCategory = ({
       onClick={() => {handleFetchCategories();}}
       onChange={(e) => {handleFetchFilteredProducts(e, "category");}}
     >
-      <option value="" disabled hidden>Select category</option>
+      <option value="">Select category</option>
       {categories.map((c) => (
         <option key={c.id} value={c.id}>
           {c.name}
@@ -40,7 +40,7 @@ export const FilterProductByBrand = ({
       onClick={() => {handleFetchBrands();}}
       onChange={(e) => {handleFetchFilteredProducts(e, "brand");}}
     >
-      <option value="" disabled hidden>Select brand</option>
+      <option value="">Select brand</option>
       {brands.map((b) => (
         <option key={b.id} value={b.id}>
           {b.name}
@@ -50,7 +50,7 @@ export const FilterProductByBrand = ({
   </>
 );
 
-export const SearchProduct = (search, setSearch) => (
+export const SearchProduct = ({search, setSearch}) => (
   <>
     <p>Search</p>
     <input
@@ -63,13 +63,14 @@ export const SearchProduct = (search, setSearch) => (
   </>
 );
 
-export const Pagination = (pageSize, setPageSize) => (
+export const Pagination = ({pageSize, setPageSize}) => (
   <>
     <p>Show</p>
     <input
-      type="text"
+      type="number"
       name="pageSize"
       value={pageSize}
+      min={1}
       onChange={(e) => {setPageSize(Number(e.target.value))}}
     />
     <p>entries</p>
