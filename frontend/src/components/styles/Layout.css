@@ -1,0 +1,7 @@
+
+.main-container{
+  height: 93%;
+  display: grid;
+  grid-template-columns: 0.7fr 3.3fr;
+  /* column-gap: var(--space-3xl); */
+}
