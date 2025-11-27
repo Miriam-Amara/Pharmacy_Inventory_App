@@ -1,53 +1,47 @@
-import axios from "axios";
-
+import api from "./api";
 import { showToast } from "../utils/toast";
 
 
 export async function addBrandApi(brand_data) {
   try{
-    await axios.post(
-      "/api/v1/brands",
-      brand_data,
-      {withCredentials: true}
-    );
+    await api.post("/brands", brand_data);
   }
   catch (error) {
     if (error.response)
       showToast(error?.response?.data?.error || "Error adding brand", "error");
-    else
+    else {
       console.error(error);
+      throw error;
+    }
   }
 }
 
 export async function updateBrandApi(brand_id, data) {
   try{
-    await axios.put(
-      `/api/v1/brands/${brand_id}`,
-      data,
-      {withCredentials: true}
-    );
+    await api.put(`/brands/${brand_id}`, data);
   }
   catch (error) {
     if (error.response)
       showToast(error?.response?.data?.error || "Error updating brand", "eror");
-    else
+    else {
       console.error(error);
+      throw error;
+    }
   }
 }
 
 export async function fetchBrandApi(brand_id) {
   try{
-    const response = await axios.get(
-      `/api/v1/brands/${brand_id}`,
-      {withCredentials: true}
-    );
+    const response = await api.get(`/brands/${brand_id}`);
     return response.data;
   }
   catch (error) {
     if (error.response)
       showToast(error?.response?.data?.error || "Error getting the brand", "error")
-    else
+    else {
       console.error(error);
+      throw error;
+    }
   }
 }
 
@@ -56,31 +50,29 @@ export async function fetchAllBrandsApi(pageSize, pageNum) {
     pageSize = pageSize ?? 5
     pageNum = pageNum ?? 1
 
-    const response = await axios.get(
-      `/api/v1/brands/${pageSize}/${pageNum}`,
-      {withCredentials: true}
-    );
+    const response = await api.get(`/brands/${pageSize}/${pageNum}`);
     return response.data;
   }
   catch (error) {
     if (error.response)
       console.log("error in fetchAllBrandsApi: ", error.response.data.error)
-    else
+    else {
       console.error(error);
+      throw error;
+    }
   }
 }
 
 export async function deleteBrandApi(brand_id) {
   try{
-    await axios.delete(
-      `/api/v1/brands/${brand_id}`,
-      {withCredentials: true}
-    );
+    await api.delete(`/brands/${brand_id}`);
   }
   catch (error) {
     if (error.response)
       showToast(error?.response?.data?.error || "Error deleting brand", "error");
-    else
+    else {
       console.error(error);
+      throw error;
+    }
   }
 }
