@@ -3,7 +3,7 @@ import { useState, useEffect } from "react";
 import {
   profileUpdateValidationSchema
 } from "../../utils/formInputValidation";
-import { fetchMe, updateEmployee } from "../../api/employee";
+import { fetchMe, updateEmployeeApi } from "../../api/employee";
 import Layout from "../../components/Layout";
 
 
@@ -42,7 +42,7 @@ function useProfileLogic() {
     e.preventDefault();
     try{
       await profileUpdateValidationSchema.validate(formData, {abortEarly: false});
-      await updateEmployee(formData?.id, formData);
+      await updateEmployeeApi(formData?.id, formData);
     }
     catch (error) {
       console.error("Error in handle submit", error);
