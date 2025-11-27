@@ -1,28 +1,25 @@
-import axios from "axios";
-
+import api from "./api";
 import { showToast } from "../utils/toast";
 
 
 export async function addProductApi(productData) {
   try{
-    let response = await axios.post("/api/v1/products", productData);
+    let response = await api.post("/products", productData);
     return response.data
   }
   catch (error) {
+    console.log("Error in addProductApi: ", error.response.data.error)
     if (error.response)
       showToast(error?.response?.data?.error || "Error adding product", "error");
     else
       console.error("error: ", error);
+    throw error;
   }
 }
 
 export async function updateProductApi(productData, product_id) {
   try{
-    let response = await axios.put(
-      `/api/v1/products/${product_id}`,
-      productData,
-      {withCredentials: true}
-    );
+    let response = await api.put(`/products/${product_id}`, productData);
     return response.data
   }
   catch (error) {
@@ -30,15 +27,13 @@ export async function updateProductApi(productData, product_id) {
       showToast(error?.response?.data?.error || "Error updating product", "error");
     else
       console.error("error: ", error);
+    throw error;
   }
 }
 
 export async function fetchProductApi(product_id) {
   try{
-    let response = await axios.get(
-      `api/v1/products/${product_id}`,
-      {withCredentials: true}
-    )    
+    let response = await api.get(`/products/${product_id}`)
     return response.data;
   }
   catch (error) {
@@ -49,6 +44,7 @@ export async function fetchProductApi(product_id) {
     );}
     else
       console.error("error: ", error);
+    throw error;
   }
 }
 
@@ -57,32 +53,25 @@ export async function fetchAllProductsApi(pageSize, pageNum, search) {
     pageSize = pageSize || 5
     pageNum = pageNum || 1
 
-    let response = await axios.get(
-      `api/v1/products/${pageSize}/${pageNum}`,
-      {
-        withCredentials: true,
-        params: {search: search || ""}
-      }
+    let response = await api.get(
+      `/products/${pageSize}/${pageNum}`,
+      {params: {search: search || null}}
   )
     return response.data;
   }
   catch (error) {
     if (error.response) {
-      showToast(
-      error?.response?.data?.error ||
-      "Error fetching products. Please contact admin.", "error"
-    );}
+      console.log("error in fetchAllProductsApi: ", error.response.data.error)
+    }
     else
       console.error("error: ", error);
+    throw error;
   }
 }
 
 export async function deleteProductApi(product_id) {
   try{
-    await axios.delete(
-      `api/v1/products/${product_id}`,
-      {withCredentials: true}
-    )
+    await api.delete(`/products/${product_id}`)
   }
   catch (error) {
     if (error.response) {
@@ -91,7 +80,8 @@ export async function deleteProductApi(product_id) {
       "Error deleting product. Please contact admin.", "error"
     );}
     else
-      console.error("error: ", error); 
+      console.error("error: ", error);
+    throw error;
   }
 }
 
@@ -99,21 +89,13 @@ export async function fetchFilteredProductsByBrandAndCategory(
   brand_id, category_id, pageSize, pageNum) {
   try {
     if (brand_id && category_id) {
-      var response = await axios.get(
-      `api/v1/categories/${category_id}/brands/${brand_id}/products/${pageSize}/${pageNum}`,
-      {withCredentials: true}
+      var response = await api.get(
+      `/categories/${category_id}/brands/${brand_id}/products/${pageSize}/${pageNum}`,
     )}
     else if (brand_id) {
-      response = await axios.get(
-      `api/v1/brands/${brand_id}/products/${pageSize}/${pageNum}`,
-      {withCredentials: true}
-    )}
+      response = await api.get(`/brands/${brand_id}/products/${pageSize}/${pageNum}`)}
     else{
-      response = await axios.get(
-      `api/v1/categories/${category_id}/products/${pageSize}/${pageNum}`,
-      {withCredentials: true}
-    )}
-    
+      response = await api.get(`/categories/${category_id}/products/${pageSize}/${pageNum}`)}
     return response.data;
   }
   catch (error) {
@@ -124,5 +106,6 @@ export async function fetchFilteredProductsByBrandAndCategory(
     );}
     else
       console.error("error: ", error);
+    throw error;
   }
 }
