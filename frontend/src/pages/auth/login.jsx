@@ -2,7 +2,8 @@ import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 
 import { employeeLoginValidationSchema } from "../../utils/formInputValidation";
-import { login } from "../../api/employee";
+import { loginApi } from "../../api/employee";
+import { useAuth } from "../../hook/useAuth";
 
 
 function useLoginLogic(){
@@ -19,12 +20,14 @@ function useLoginLogic(){
       setFormData(prev => ({...prev, [name]: value}));
     };
   
+    const {login} = useAuth();
     const handleSubmit = async (e) => {
       e.preventDefault();
       try{
-        await employeeLoginValidationSchema.validate(formData, {abortEarly: false})
-        await login(formData)
-  
+        const validData = await employeeLoginValidationSchema.validate(formData, {abortEarly: false})
+        await loginApi(validData)
+        await login();
+
         setErrors({});
         setFormData({
           email_or_username: "",
@@ -33,13 +36,13 @@ function useLoginLogic(){
         navigate("/profile");
       }
       catch (error) {
-        console.error("Error in login handleSubmit", error);
         if (error.inner) {
           const newError = {}
           for (let err of error.inner)
             newError[err.path] = err.message;
           setErrors(newError);
         }
+        console.error(error);
       }
     };
   
