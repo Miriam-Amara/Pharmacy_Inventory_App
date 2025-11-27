@@ -1,0 +1,96 @@
+
+.sidebar-nav{
+  height: 100%;
+  padding: var(--space-md);
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-sm);
+}
+
+.sidebar-inner-nav{
+  border: 1px var(--color-black) solid;
+  border-radius: 5px;
+  padding: var(--space-xxs);
+  margin-top: var(--space-xs);
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-xs);
+}
+
+.sidebar-nav div, .sidebar-inner-nav li{
+  line-height: var(--space-sm);
+  padding-left: var(--space-lg);
+  background-repeat: no-repeat;
+}
+
+.dashboard{
+  background-size: var(--space-sm) var(--space-sm);
+  background-image: url("../../assets/dashboard_icon.png");
+  cursor: pointer;
+}
+
+.inventory{
+  /* background-size: var(--space-sm) var(--space-sm);
+  background-image: url("../../assets/inventory_icon.png"); */
+  cursor: pointer;
+}
+
+.transaction{
+  /* background-size: var(--space-sm) var(--space-sm);
+  background-image: url("../../assets/transactions_icon.png"); */
+  cursor: pointer;
+}
+
+.brand{
+  background-size: var(--space-sm) var(--space-sm);
+  background-image: url("../../assets/brands_icon.png");
+  cursor: pointer;
+}
+
+.category{
+  background-size: var(--space-sm) var(--space-sm);
+  background-image: url("../../assets/categories_icon.png");
+  cursor: pointer;
+}
+
+.product{
+  background-size: var(--space-sm) var(--space-sm);
+  background-image: url("../../assets/products_icon.png");
+  cursor: pointer;
+}
+
+.sale_order{
+  background-size: var(--space-sm) var(--space-sm);
+  background-image: url("../../assets/sale_orders_icon.png");
+  cursor: pointer;
+}
+
+.sale{
+  background-size: var(--space-sm) var(--space-sm);
+  background-image: url("../../assets/sales_icon.png");
+  cursor: pointer;
+}
+
+.purchase_order{
+  background-size: var(--space-md) var(--space-md);
+  background-image: url("../../assets/purchase_orders_icon.png");
+  cursor: pointer;
+}
+
+.purchase{
+  background-size: var(--space-sm) var(--space-sm);
+  background-image: url("../../assets/purchases_icon.png");
+  cursor: pointer;
+}
+
+.employee{
+  background-size: var(--space-md) var(--space-sm);
+  background-image: url("../../assets/employees_icon.png");
+  cursor: pointer;
+}
+
+.profile{
+  background-size: var(--space-sm) var(--space-sm);
+  background-image: url("../../assets/profile_icon.png");
+  cursor: pointer;
+}
