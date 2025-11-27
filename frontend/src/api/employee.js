@@ -1,20 +1,20 @@
-import axios from "axios";
-
+import api from "./api";
 import { showToast } from "../utils/toast";
 
 
-export async function register(registerData) {
+export async function registerApi(registerData) {
   try{
-    await axios.post("/api/v1/register", registerData);
+    await api.post("/register", registerData);
   }
   catch (error) {
     showToast(error.response?.data?.error, "error");
   }
 }
 
-export async function login(loginData) {
+export async function loginApi(loginData) {
   try{
-    await axios.post("/api/v1/auth_session/login", loginData);
+    const response = await api.post("/auth_session/login", loginData);
+    return (response);
   }
   catch (error) {
     showToast(error.response?.data?.error, "error");
@@ -22,9 +22,9 @@ export async function login(loginData) {
   }
 }
 
-export async function updateEmployee(employee_id, data) {
+export async function updateEmployeeApi(employee_id, data) {
   try{
-    await axios.put(`/api/v1/employees/${employee_id}`, data, {withCredentials: true});
+    await api.put(`/employees/${employee_id}`, data);
     showToast("Profile updated successfully", "success");
   }
   catch (error) {
@@ -34,40 +34,35 @@ export async function updateEmployee(employee_id, data) {
 
 export async function fetchMe() {
   try{
-    const response = await axios.get("/api/v1/employees/me", {withCredentials: true});
+    const response = await api.get("/employees/me");
     return response.data;
   }
   catch (error) {
-    console.log(
-      "Error in fetchMe(): ",
+    console.error(
       error.response?.data?.error || "Error fetching employee profile."
     );
+    throw error;
   }
 }
 
-export async function fetchEmployee(employee_id) {
-  console.log("Employee id:", employee_id);
+export async function fetchEmployeeApi(employee_id) {
   try{
-    const response = await axios.get(
-      `/api/v1/employees/${employee_id}`,
-      {withCredentials: true}
-    );
+    const response = await api.get(`/employees/${employee_id}`);
     return response.data;
   }
   catch (error) {
-    console.log(error.response?.data?.error || "Error fetching employee profile.");
+    console.error(error.response?.data?.error || "Error fetching employee profile.");
+    throw error;
   }
 }
 
-export async function fetchAllEmployees() {
+export async function fetchAllEmployeesApi() {
   try{
-    const response = await axios.get(
-      `/api/v1/employees/${50}/${1}`,
-      {withCredentials: true}
-    );
+    const response = await api.get(`/employees/${50}/${1}`);
     return response.data;
   }
   catch (error) {
     showToast(error.response?.data?.error || "Error fetching employees", "error");
+    throw error;
   }
 }
