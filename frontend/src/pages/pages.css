@@ -1,0 +1,41 @@
+
+.content-container{
+  padding: 2rem 3rem 2rem 3rem;
+  display: flex;
+  flex-direction: column;
+}
+
+
+/* ---------- Title Section ---------- */
+.title-section{
+  height: 15%;
+  margin-bottom: 2rem;
+}
+
+
+/* ---------- Control Section ---------- */
+.control-section{
+  height: 15%;
+  margin-bottom: 2rem;
+  display: flex;
+}
+
+.add{
+  margin-right: 2rem;
+}
+
+.pagination{
+  margin-right: auto;
+  display: flex;
+  align-items: center;
+}
+
+.search{
+  
+}
+
+
+/* ---------- Display Section ---------- */
+.display-section{
+
+}
