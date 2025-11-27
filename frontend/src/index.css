@@ -2,24 +2,30 @@
 
 :root{
   /* Colors */
-  --color-primary: #2E7D32;
-  --color-primary-light: #A5D6A7;
-  --color-secondary: #1565C0;
-  --color-grey: #E0E0E0;
-  --color-black: #212121;
-  --color-white: #fff;
+  --color-primary: #00897B;
+  --color-primary-light: #B2DFDB;
+  --color-primary-dark: #005F56;
+
+  --color-secondary: #FF7043;
+  --color-secondary-light: #FFCCBC;
+  --color-secondary-dark: #BF360C;
+
+  --color-grey: #F5F7FA;
+  --color-black: #222222;
+  --color-white: #ffff;
+
+  --color-warn: #D32F2F;
   --color-error: #D32F2F;
 
   /* FONT SIZE */
   --text-xs: 1.0rem;
   --text-sm: 1.2rem;
   --text-base: 1.6rem;
-  --text-lg: 2.0rem;
-  --text-h5: 2.4rem;
-  --text-h4: 2.8rem;
-  --text-h3: 3.2rem;
-  --text-h2: 3.6rem;
-  --text-h1: 4.0rem;
+  --text-h5: 2.0rem;
+  --text-h4: 2.4rem;
+  --text-h3: 2.8rem;
+  --text-h2: 3.2rem;
+  --text-h1: 3.6rem;
 
   /* FONT-WEIGHT */
   --font-weight-normal: 400;
@@ -27,17 +33,17 @@
   --font-weight-bold: 700;
 
   /* SPACING SCALE (1.25 ratio) */
-  --space-xxs: 0.4rem;
-  --space-xs: 0.6rem;
-  --space-sm: 0.8rem;
-  --space-md: 1.0rem;
-  --space-lg: 1.25rem;
-  --space-xl: 1.6rem;
-  --space-2xl: 2.0rem;
-  --space-3xl: 2.5rem;
-  --space-4xl: 3.2rem;
-  --space-5xl: 4.0rem;
-  --space-6xl: 5.0rem;
+  --space-xxs: 1.0rem;
+  --space-xs: 1.5rem;
+  --space-sm: 2.0rem;
+  --space-md: 2.5rem;
+  --space-lg: 3.0rem;
+  --space-xl: 3.5rem;
+  --space-2xl: 4.0rem;
+  --space-3xl: 4.5rem;
+  --space-4xl: 5.0rem;
+  --space-5xl: 5.5rem;
+  --space-6xl: 6.0rem;
 }
 
 #root{
@@ -60,7 +66,7 @@ body{
   color: var(--color-black);
   font-size: var(--text-base);
   font-weight: var(--font-weight-normal);
-  font-family: "Poppins", sans-serif;
+  font-family: "Roboto", sans-serif;
 }
 
 h1{
@@ -80,12 +86,16 @@ h3{
 
 h4{
   font-size: var(--text-h4);
-  font-weight: var(--font-weight-normal);
+  font-weight: var(--font-weight-semibold);
 }
 
 h5{
   font-size: var(--text-h5);
-  font-weight: var(--font-weight-normal);
+  font-weight: var(--font-weight-semibold);
+}
+
+a{
+  color: var(--color-black);
 }
 
 /* 24rem = 384px */
