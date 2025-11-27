@@ -1,54 +1,50 @@
-import "./sidebar.css"
+import { useState } from "react";
+import { Link } from "react-router-dom";
+
+import "./styles/sidebar.css"
 
 
-function Sidebar(){
-    return(
-        <aside className="sidebar-nav">
-                <ul className="main-nav">
-                    {/* <li></li> */}
-                    <li><a href="/dashboard">Dashboard</a></li>
-                </ul>
 
-                <ul className="main-nav">
-                    {/* <li><img src="content_icon" alt="Content" className="nav-icon" /></li> */}
-                    <li>
-                        Inventory
-                        <ul className="inner-nav">
-                            <li><a href="/brands">Brands</a></li>
-                            <li><a href="/categories">Categories</a></li>
-                            <li><a href="/products">Products</a></li>
-                    </ul>
-                    </li>
-                </ul>
-            
-                <ul className="main-nav">
-                    {/* <li><img src="support_icon" alt="Support" className="nav-icon" /></li> */}
-                    <li>
-                        Transactions
-                        <ul className="inner-nav">
-                            <li><a href="/sales">Sales</a></li>
-                            <li><a href="/purchase_orders">Purchase Order</a></li>
-                            <li><a href="/purchase_order_items">Purchase Order Item</a></li>
-                    </ul>
-                    </li>
-                </ul>
+export default function Sidebar({employee}){
+  const [displayInventory, setDisplayInventory] = useState(false);
+  const [displayTransactions, setDisplayTransactions] = useState(false);
 
-                <ul className="main-nav">
-                    {/* <li></li> */}
-                    <li>
-                        Users
-                        <ul className="inner-nav">
-                            <li><a href="/employees">Manage Users</a></li>
-                    </ul>
-                    </li>
-                </ul>
-
-                <ul className="main-nav">
-                    {/* <li><img src="profile_icon" alt="Profile" className="nav-icon" /></li> */}
-                    <li><a href="/profile">Profile</a></li>
-                </ul>
-        </aside>
-    );
+  const admin = employee?.is_admin ?? false;
+  
+  return(
+      <aside className="sidebar-nav">
+        {admin && <div className="dashboard"><Link to="/dashboard">Dashboard</Link></div>}
+        {admin &&
+        <ul>
+            <li className="inventory" onClick={() => {setDisplayInventory(!displayInventory)}}>
+                Inventory
+                {displayInventory &&
+                <ul className="sidebar-inner-nav">
+                  <li className="brand"><Link to="/brands">Brands</Link></li>
+                  <li className="category"><Link to="/categories">Categories</Link></li>
+                  <li className="product"><Link to="/products">Products</Link></li>
+                </ul>}
+            </li>
+        </ul>
+        }
+        {admin &&
+        <ul>
+          <li className="transaction" onClick={() => {setDisplayTransactions(!displayTransactions)}}>
+            Transactions
+            {displayTransactions &&
+            <ul className="sidebar-inner-nav">
+              <li className="sale_order"><Link to="/sales_orders">Sales Orders</Link></li>
+              <li className="sale"><Link to="/sales">Sales</Link></li>
+              <li className="purchase_order"><Link to="/purchase_orders">Purchase Orders</Link></li>
+              <li className="purchase"><Link to="/purchases">Purchases</Link></li>
+            </ul>
+            }
+          </li>
+        </ul>
+        }
+        {!admin && <div className="sale_order"><Link to="/sales_orders">Sales Orders</Link></div>}
+        {admin && <div className="employee"><Link to="/employees">Employees</Link></div>}
+        <div className="profile"><Link to="/profile">Profile</Link></div>
+      </aside>
+  );
 }
-
-export default Sidebar
