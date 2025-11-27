@@ -4,7 +4,7 @@ import { useNavigate } from "react-router-dom";
 import {
   employeeRegistrationValidationSchema
 } from "../../utils/formInputValidation";
-import { register } from "../../api/employee";
+import { registerApi } from "../../api/employee";
 
 
 function useRegistrationLogic() {
@@ -39,7 +39,7 @@ function useRegistrationLogic() {
         ...formData,
         middle_name: formData.middle_name.trim() === "" ? null : formData.middle_name
       }
-      await register(data)
+      await registerApi(data)
 
       setErrors({});
       setFormData({
