@@ -1,15 +1,18 @@
-import axios from "axios";
 import { useNavigate } from "react-router-dom";
 
-import "./Header.css"
+import api from "../api/api";
+import "./styles/Header.css"
 
 
-function Header({ menu, role }) {
+function Header({ employee, logout, displayMenu, setDisplayMenu }) {
+  
+  const username = employee?.username ?? "Guest";
   const navigate = useNavigate();
 
   const handleLogout = async () => {
     try {
-      await axios.delete("/api/v1/auth_session/logout", { withCredentials: true });
+      await api.delete("/auth_session/logout");
+      logout();
       navigate("/login");
     } catch (err) {
       console.error("Logout failed:", err);
@@ -18,19 +21,21 @@ function Header({ menu, role }) {
 
   return (
     <header className="header">
-      <div>
-        <div>{menu}</div>
+      <div className="header-item">
+        <div
+          className="menu"
+          onClick={() => {setDisplayMenu(!displayMenu);}}
+        >
+        </div>
         <h5>CIA-PHARMACY</h5>
       </div>
 
-      <div>{role}</div>
-
-      <div>
+      <div className="header-item">
+        <p>{username}</p>
         <button onClick={handleLogout}>
-          Logout
+            Logout
         </button>
-      </div>
-      
+      </div>  
     </header>
   );
 }
