@@ -22,15 +22,15 @@ jobs:
     env:
       working-directory: backend
       ENV: test
-      TEST_DATABASE_USER: postgres
-      TEST_DATABASE_PASSWORD: finalyear
-      TEST_DATABASE_NAME: pharmacy
-      TEST_DATABASE_HOST: localhost
-      TEST_DATABASE_PORT: 5432
+      POSTGRES_USER: ${{ secrets.POSTGRES_USER }}
+      POSTGRES_PASSWORD: ${{ secrets.POSTGRES_PASSWORD }}
+      POSTGRES_DB: ${{ secrets.POSTGRES_DB }}
+      POSTGRES_HOST: localhost
+      POSTGRES_PORT: 5432
       PHARMACY_API_HOST: ${{ secrets.PHARMACY_API_HOST }}
       PHARMACY_API_PORT: ${{ secrets.PHARMACY_API_PORT }}
-      SESSION_NAME: ${{ secrets.SESSION_NAME }}
-      SESSION_DURATION: ${{ secrets.SESSION_DURATION }}
+      SESSION_NAME: _my_session_id
+      SESSION_DURATION: 3600
       DO_HOST: ${{ secrets.DO_HOST }}
       DO_USER: ${{ secrets.DO_USER }}
       DO_SSH_KEY: ${{ secrets.DO_SSH_KEY }}
@@ -39,9 +39,9 @@ jobs:
       postgres:
         image: postgres:latest
         env:
-          POSTGRES_USER: postgres
-          POSTGRES_PASSWORD: finalyear
-          POSTGRES_DB: pharmacy
+          POSTGRES_USER: ${{ secrets.POSTGRES_USER }}
+          POSTGRES_PASSWORD: ${{ secrets.POSTGRES_PASSWORD }}
+          POSTGRES_DB: ${{ secrets.POSTGRES_DB }}
         ports:
           - 5432:5432
         options: >-
@@ -74,43 +74,43 @@ jobs:
   # --------------------
   # 2 DEPLOY (runs after test)
   # --------------------
-  deploy:
-    name: Deploy to DigitalOcean Droplet
-    runs-on: ubuntu-latest
-    needs: test   # only run if test job succeeds
+  # deploy:
+  #   name: Deploy to DigitalOcean Droplet
+  #   runs-on: ubuntu-latest
+  #   needs: test   # only run if test job succeeds
 
-    steps:
-      - name: Checkout Repository
-        uses: actions/checkout@v3
+  #   steps:
+  #     - name: Checkout Repository
+  #       uses: actions/checkout@v3
 
-      - name: Set up SSH
-        uses: webfactory/ssh-agent@v0.9.1
-        with:
-          ssh-private-key: ${{ secrets.DO_SSH_KEY }}
+  #     - name: Set up SSH
+  #       uses: webfactory/ssh-agent@v0.9.1
+  #       with:
+  #         ssh-private-key: ${{ secrets.DO_SSH_KEY }}
 
-      - name: Deploy to Droplet
-        run: |
-          ssh -o StrictHostKeyChecking=no root@${{ secrets.DO_HOST }} << 'EOF'
-          echo "Pulling latest code..."
-          cd /root/pharmacy_app
-          git pull origin main
+  #     - name: Deploy to Droplet
+  #       run: |
+  #         ssh -o StrictHostKeyChecking=no root@${{ secrets.DO_HOST }} << 'EOF'
+  #         echo "Pulling latest code..."
+  #         cd /root/pharmacy_app
+  #         git pull origin main
 
-          echo "Checking Docker service status..."
-          if ! systemctl is-active --quiet docker; then
-            echo "Docker is not running. Attempting to start..."
-            systemctl start docker
-          fi
+  #         echo "Checking Docker service status..."
+  #         if ! systemctl is-active --quiet docker; then
+  #           echo "Docker is not running. Attempting to start..."
+  #           systemctl start docker
+  #         fi
 
-          echo "Docker service status:"
-          systemctl status docker --no-pager | head -n 10
+  #         echo "Docker service status:"
+  #         systemctl status docker --no-pager | head -n 10
 
-          echo "Testing Docker daemon access..."
-          if ! docker ps > /dev/null 2>&1; then
-            echo "ERROR: Docker daemon is still unreachable. Aborting deployment."
-            exit 1
-          fi
+  #         echo "Testing Docker daemon access..."
+  #         if ! docker ps > /dev/null 2>&1; then
+  #           echo "ERROR: Docker daemon is still unreachable. Aborting deployment."
+  #           exit 1
+  #         fi
 
-          echo "Bringing up containers..."
-          docker compose down
-          docker compose up -d --build
-          EOF
+  #         echo "Bringing up containers..."
+  #         docker compose down
+  #         docker compose up -d --build
+  #         EOF
