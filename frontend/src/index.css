@@ -3,7 +3,7 @@
 :root{
   /* Colors */
   --color-primary: #00897B;
-  --color-primary-light: #B2DFDB;
+  --color-primary-light: #e6f3f2;
   --color-primary-dark: #005F56;
 
   --color-secondary: #FF7043;
@@ -97,6 +97,15 @@ h5{
 a{
   color: var(--color-black);
 }
+
+.btn{
+  border: none;
+  background-color: var(--color-white);
+  cursor: pointer;
+}
+
+
+
 
 /* 24rem = 384px */
 @media (min-width: 24rem) {
