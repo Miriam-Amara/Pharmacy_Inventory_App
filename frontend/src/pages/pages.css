@@ -1,23 +1,34 @@
 
 .content-container{
+  flex-grow: 1;
+  margin: 10vh 3rem 2rem 3rem;
   padding: 2rem 3rem 2rem 3rem;
+  background-color: var(--color-white);
+  box-shadow: 0 0 2rem var(--color-grey);
   display: flex;
   flex-direction: column;
+  overflow-y: auto;
+  overflow-x: hidden;
 }
 
 
 /* ---------- Title Section ---------- */
 .title-section{
-  height: 15%;
-  margin-bottom: 2rem;
+  padding-bottom: 2rem;
+  border-bottom: 3px var(--color-grey) solid;
+  display: flex;
+  flex-direction: column;
+  gap: 5px;
 }
 
 
 /* ---------- Control Section ---------- */
 .control-section{
-  height: 15%;
-  margin-bottom: 2rem;
+  padding: 2rem 0;
+  border-bottom: 3px var(--color-grey) solid;
   display: flex;
+  align-items: start;
+  /* flex-wrap: wrap; */
 }
 
 .add{
@@ -25,17 +36,172 @@
 }
 
 .pagination{
-  margin-right: auto;
+  margin-right: 2rem;
   display: flex;
   align-items: center;
+  gap: 5px;
+}
+
+.pagination input{
+  width: 5rem;
+}
+
+.filter{
+  display: flex;
+  gap: 1rem;
+}
+
+.filter select{
+  width: 15rem;
 }
 
 .search{
-  
+  display: flex;
+  align-items: center;
+  margin-left: auto;
+  margin-right: 5rem;
+  gap: 5px;
 }
 
 
 /* ---------- Display Section ---------- */
 .display-section{
+  padding-top: 2rem;
+}
 
+.content-table{
+  border-collapse: collapse;
+  margin: 1.5rem 0;
+  min-width: 40rem;
+}
+
+.content-table thead tr{
+  text-align: left;
+}
+
+.content-table th,
+.content-table td{
+  padding: 1rem 1.5rem;
+}
+
+.content-table tr{
+  border-bottom: 1px solid var(--color-grey);
+}
+
+/* .content-table tr:nth-of-type(even) {
+  background-color: var(--color-grey);
+} */
+
+.table-actions{
+  max-width: 10rem;
+  display: flex;
+  gap: 0.5rem;
+  flex-shrink: 1;
+}
+
+.long-text{
+  overflow: hidden;
+}
+
+
+
+/* -------------------- Modal -------------------- */
+/* ---------- Form Modal ---------- */
+.details-modal-container,
+.modal-container{
+  position: fixed;
+  top: 0;
+  left: 0;
+  height: 100vh;
+  width: 100vw;
+  background: rgba(0,0,0,0.5);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.details-modal,
+.modal{
+  /* width: 70rem; */
+  max-height: 50rem;
+  max-width: 70rem;
+  padding: 3rem;
+  border-radius: 5px;
+  background-color: var(--color-white);
+  display: flex;
+  flex-direction: column;
+  gap: 2rem;
+  overflow-y: auto;
+}
+
+.form{
+  display: flex;
+  flex-direction: column;
+  gap: 2rem;
+}
+
+.form-item{
+  display: flex;
+  gap: 1rem;
+}
+
+.form-item div{
+  margin-left: auto;
+}
+
+.form-item select,
+.form-item input{
+  width: 20rem;
+}
+
+.form-item textarea{
+  height: 20rem;
+  width: 20rem;
+}
+
+.form-item p{
+  font-size: var(--text-sm);
+  color: var(--color-error);
+  margin-top: 5px;
+}
+
+/* ---------- Details Modal ---------- */
+.details-modal{
+  gap: 2.5rem;
+}
+
+.details{
+  display: flex;
+  flex-direction: column;
+  gap: 2rem;
+}
+
+.details p{
+  line-height: 1.5;
+  font-size: var(--text-base);
+}
+
+.details span{
+  font-weight: 500;
+}
+
+.details-title{
+  margin-bottom: 1rem;
+  display: flex;
+  flex-direction: column;
+  gap: 0.2rem;
+}
+
+.details-content{
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem;
+}
+
+
+/* -------------------- Buttons -------------------- */
+.btn-info-icon img,
+.btn-edit-icon img,
+.btn-danger-icon img{
+  width: 80%;
 }
