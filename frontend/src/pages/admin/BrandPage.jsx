@@ -12,30 +12,28 @@ function BrandPageView() {
     selectedBrand, search,
     loading, filteredBrands,
     formMode, setFormMode,
-    pageSizeInput, setPageSizeInput,
-    pageNumInput, setPageNumInput,
+    pageSize, setPageSize,
     query, setQuery,
     showForm, setShowForm,
-    setPageSize, setPageNum,
     closeDetailsModal, resetForm,
     handleChange, handleDelete, handleEdit,
     handleSubmit, handleViewDetails,
   } = useBrandLogic();
 
   return (
-    <main>
+    <main className="content-container">
 
       {/* Info section */}
-      <section>
-        <h2>Brands</h2>
+      <section className="title-section">
+        <h5>Brands</h5>
         <p>View, add, edit and delete brands.</p>
       </section>
 
       {/* Control Section - forms, search, pagination */}
-      <section>
+      <section className="control-section">
 
         {/* Form */}
-        <div>
+        <div className="add">
           <button
             onClick={() => {setFormMode("add"); setShowForm(true);}}
           >
@@ -55,47 +53,23 @@ function BrandPageView() {
         </div>
 
         {/* Pagination */}
-        <div>
-          <div>
-            <label>Page Size:</label>
-            <input
-              type="number"
-              name="pageSize"
-              value={pageSizeInput}
-              min={1}
-              onChange={(e) => {
-                const val = Number(e.target.value)
-                setPageSizeInput(val < 1 ? 1 : val)
-              }}
-            />
-          </div>
-
-          <div>
-            <label>Next Page:</label>
-            <input
-              type="number"
-              name="pageNum"
-              value={pageNumInput}
-              min={1}
-              onChange={(e) => {
-                const val = Number(e.target.value)
-                setPageNumInput(val < 1 ? 1 : val)
-              }}
-            />
-          </div>
-
-          <button
-            onClick={() => {
-              setPageSize(pageSizeInput);
-              setPageNum(pageNumInput);
+        <div className="pagination">
+          <p>Show</p>
+          <input
+            type="number"
+            name="pageSize"
+            value={pageSize}
+            min={1}
+            onChange={(e) => {
+              const val = Number(e.target.value)
+              setPageSize(val < 1 ? 1 : val)
             }}
-          >
-            Enter
-          </button>
+          />
+          <p>entries</p>
         </div>
 
         {/* Search */}
-        <div>
+        <div className="search">
           <input
             type="text"
             value={query}
@@ -106,7 +80,14 @@ function BrandPageView() {
       </section>
 
       {/* Brand Display section */}
-      <section>
+      <section className="display-section">
+        {selectedBrand && (
+          <BrandDetailsModal
+          brand={selectedBrand}
+          onClose={closeDetailsModal}
+          />
+        )}
+        
         {<BrandTable
           brands={filteredBrands}
           filteredBrands={filteredBrands}
@@ -116,13 +97,6 @@ function BrandPageView() {
           onView={handleViewDetails}
           isSearching={search}
         />}
-
-        {selectedBrand && (
-          <BrandDetailsModal
-          brand={selectedBrand}
-          onClose={closeDetailsModal}
-          />
-        )}
       </section>
 
     </main>
