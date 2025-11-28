@@ -34,7 +34,7 @@ class Sale(BaseModel, Base):
     unit_selling_price = mapped_column(Float, nullable=False)
     total_selling_price = mapped_column(Float, nullable=False)
     payment_status = mapped_column(
-        Enum(SalePaymentStatus, name="sale_payment_status"),
+        Enum(SalePaymentStatus, name="sale_payment_status", create_type=True),
         nullable=False
     )
     employee_id = mapped_column(

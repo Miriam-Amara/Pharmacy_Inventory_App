@@ -31,7 +31,7 @@ class PurchaseOrder(BaseModel, Base):
 
     supplier_name = mapped_column(String(200), unique=True)
     status = mapped_column(
-        Enum(PurchaseOrderStatus, name="purchase_order_status"),
+        Enum(PurchaseOrderStatus, name="purchase_order_status", create_type=True),
         default="pending"
     )
     ordering_cost = mapped_column(Float, nullable=False, default=0.00)

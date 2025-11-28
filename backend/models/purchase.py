@@ -44,11 +44,11 @@ class Purchase(BaseModel, Base):
     unit_cost_price = mapped_column(Float, default=0)
     total_cost_price = mapped_column(Float, default=0)
     payment_status = mapped_column(
-        Enum(PurchasePaymentStatus, name="purchase_payment_status", create_type=False),
+        Enum(PurchasePaymentStatus, name="purchase_payment_status", create_type=True),
         nullable=False
     )
     item_status = mapped_column(
-        Enum(PurchaseItemStatus, name="purchase_item_status", create_type=False),
+        Enum(PurchaseItemStatus, name="purchase_item_status", create_type=True),
         default="pending"
     )
 

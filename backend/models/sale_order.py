@@ -25,7 +25,7 @@ class SaleOrder(BaseModel, Base):
     __tablename__ = "sale_orders"
 
     status = mapped_column(
-        Enum(SaleOrderStatus, name="sale_order_status"),
+        Enum(SaleOrderStatus, name="sale_order_status", create_type=True),
         default="pending"
     )
     employee_id = mapped_column(
