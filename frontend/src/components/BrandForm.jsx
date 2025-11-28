@@ -10,12 +10,16 @@ function BrandForm({
 }) {
 
   return (
-    <>
-      <div>
+    <div className="modal-container">
+      <div className="modal">
         <button onClick={resetForm}>Cancel</button>
 
-        <form onSubmit={handleSubmit}>
-          <div>
+        <div>
+          {formMode == "add" ? "Add" : "Edit"} Brand
+        </div>
+
+        <form onSubmit={handleSubmit} className="form">
+          <div className="form-item">
             <label>Brand Name:</label>
             <div>
               <input
@@ -29,7 +33,7 @@ function BrandForm({
             </div>
           </div>
 
-          <div>
+          <div className="form-item">
             <label>Is brand still active?</label>
             <select name="is_active" value={String(formData.is_active)} onChange={handleChange}>
               <option value="true">Yes</option>
@@ -37,12 +41,10 @@ function BrandForm({
             </select>
           </div>
 
-          <div>
-            <button type="submit">{formMode === "edit" ? "Update" : "Add"}</button>
-          </div>
+          <button type="submit">{formMode === "edit" ? "Update" : "Add"}</button>
         </form>        
       </div> 
-    </>
+    </div>
   );
 }
 
