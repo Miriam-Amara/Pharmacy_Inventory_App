@@ -44,7 +44,7 @@ def login():
         max_age=session_duration,
         secure=True,
         httponly=True,
-        samesite=None,
+        samesite="None",
     )
     return response, 201
 
