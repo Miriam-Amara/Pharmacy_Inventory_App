@@ -20,7 +20,7 @@ function Header({ employee, logout, displayMenu, setDisplayMenu }) {
   };
 
   return (
-    <header className="header">
+    <>
       <div className="header-item">
         <div
           className="menu"
@@ -36,7 +36,7 @@ function Header({ employee, logout, displayMenu, setDisplayMenu }) {
             Logout
         </button>
       </div>  
-    </header>
+    </>
   );
 }
 
