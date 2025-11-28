@@ -17,13 +17,15 @@ function Layout({main}){
   }, [employee]);
 
     return(
-        <>
-            <Header
-              employee={employee}
-              logout={logout}
-              displayMenu={displayMenu}
-              setDisplayMenu={setDisplayMenu}
-            />
+        <div className="container">
+            <header className="header">
+              <Header
+                employee={employee}
+                logout={logout}
+                displayMenu={displayMenu}
+                setDisplayMenu={setDisplayMenu}
+              />
+            </header>
             
             <div className="main-container">
                 {displayMenu &&
@@ -31,7 +33,7 @@ function Layout({main}){
                 }
                 {main}
             </div>
-        </>
+        </div>
     );
 
 }
