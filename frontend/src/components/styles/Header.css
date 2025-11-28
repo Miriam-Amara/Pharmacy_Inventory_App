@@ -1,14 +1,4 @@
 
-.header{
-  padding: var(--space-xxs);
-  height: 7%;
-  background-color: var(--color-primary);
-  display: flex;
-  flex-direction: row;
-  justify-content: space-between;
-  align-items: center;
-}
-
 .header-item{
   display: flex;
   gap: var(--space-sm);;
@@ -16,9 +6,13 @@
 }
 
 .header-item h5{
-  color: var(--color-black);
+  color: var(--color-primary-light);
   font-size: var(--text-h5);
   font-weight: var(--font-weight-semibold);
+}
+
+.header-item p{
+  color: var(--color-primary-light);
 }
 
 .menu{
