@@ -100,15 +100,15 @@ export const productValidationSchema = yup.object(
       .max(200, "Maximum of 200 characters."),
     unit_cost_price: yup.number()
       .transform((value, originalValue) => (originalValue === '' ? undefined : value))
-      .moreThan(0, "unit cost price must be greater than zero.")
-      .required("unit cost price is required."),
+      .moreThan(0, "Unit cost price must be greater than zero.")
+      .required("Unit cost price is required."),
     unit_selling_price: yup.number()
       .transform((value, originalValue) => (originalValue === '' ? undefined : value))
-      .moreThan(0, "unit selling price must be greater than zero.")
-      .required("unit selling price is required."),
+      .moreThan(0, "Unit selling price must be greater than zero.")
+      .required("Unit selling price is required."),
     category_id: yup.string()
       .required()
-      .length(36, "Category_id must be exactly 36 characters long."),
+      .length(36, "Must be exactly 36 characters long."),
     brand_id: yup.string()
       .transform((value, originalValue) => (originalValue === "" ? null : value))
       .nullable(),
