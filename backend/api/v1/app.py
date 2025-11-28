@@ -98,12 +98,12 @@ def create_app(config_name: str | None=None) -> Flask:
     return app
 
 
-config_name = os.getenv("ENV", "development")
+config_name = os.getenv("FLASK_ENV", "development")
 app = create_app(config_name)
 
 if __name__ == "__main__":
     host = os.getenv("PHARMACY_API_HOST", "0.0.0.0")
     port = int(os.getenv("PHARMACY_API_PORT", 5000))
-    debug_mode = bool(os.getenv("DEBUG_MODE", False))
-    app.run(host=host, port=port, threaded=True, debug=debug_mode)
+    FLASK_DEBUG = bool(int(os.getenv("FLASK_DEBUG", 0)))
+    app.run(host=host, port=port, threaded=True, debug=FLASK_DEBUG)
     
