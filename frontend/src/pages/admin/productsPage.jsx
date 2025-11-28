@@ -42,18 +42,18 @@ export default function ProductPage() {
 
   return (
     <Layout main={
-      <main>
+      <main className="content-container">
 
         {/* Title Section */}
-        <section>
-          <h3>Products</h3>
+        <section className="title-section">
+          <h5>Products</h5>
           <p>Add, delete, edit and view products.</p>
         </section>
 
 
         {/* Control Section */}
-        <section>
-          <div>
+        <section className="control-section">
+          <div className="add">
             <AddProduct setMode={setMode} setShowForm={setShowForm} />
             {showForm && <DisplayProductFormModal 
               formData={formData}
@@ -69,37 +69,39 @@ export default function ProductPage() {
               setShowForm={setShowForm}
             />}
           </div>
-          
-          <div>
-            <FilterProductByCategory
-              category={category}
-              categories={categories}
-              handleFetchCategories={handleFetchCategories}
-              handleFetchFilteredProducts={handleFetchFilteredProducts}
-            />
-          </div>
 
-          <div>
-            <FilterProductByBrand
-              brand={brand}
-              brands={brands}
-              handleFetchBrands={handleFetchBrands}
-              handleFetchFilteredProducts={handleFetchFilteredProducts}
-            />
-          </div>
-
-          <div>
-            <SearchProduct search={search} setSearch={setSearch} />
-          </div>
-
-          <div>
+          <div className="pagination">
             <Pagination pageSize={pageSize} setPageSize={setPageSize} />
+          </div>
+          
+          <div className="filter">
+            <div>
+              <FilterProductByCategory
+                category={category}
+                categories={categories}
+                handleFetchCategories={handleFetchCategories}
+                handleFetchFilteredProducts={handleFetchFilteredProducts}
+              />
+            </div>
+
+            <div>
+              <FilterProductByBrand
+                brand={brand}
+                brands={brands}
+                handleFetchBrands={handleFetchBrands}
+                handleFetchFilteredProducts={handleFetchFilteredProducts}
+              />
+            </div>
+          </div>
+
+          <div className="search">
+            <SearchProduct search={search} setSearch={setSearch} />
           </div>
         </section>
 
 
         {/* Display Section */}
-        <section>
+        <section className="display-section">
           {
             selectedProduct && <DisplayProductDetailsModal
               product={selectedProduct}
@@ -111,21 +113,21 @@ export default function ProductPage() {
             type="button"
             onClick={() => {setDisplayType("table")}}
           >
-            Display Table
+            Table
           </button>
 
           <button
             type="button"
             onClick={() => {setDisplayType("reordering point")}}
           >
-            Display Reordering Point
+            Reordering Point
           </button>
 
           <button
             type="button"
             onClick={() => {setDisplayType("grid")}}
           >
-            Display Grid
+            Grid View
           </button>
 
           {
