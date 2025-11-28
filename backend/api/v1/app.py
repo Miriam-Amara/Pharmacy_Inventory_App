@@ -65,7 +65,9 @@ def create_app(config_name: str | None=None) -> Flask:
     bcrypt.init_app(app) # type: ignore
     CORS(
         app,
-        resources={r"/api/v1/*": {"origins": "http://localhost:5173"}},
+        resources={r"/api/v1/*": {
+            "origins": ["http://localhost:5173", "https://pharmacy-inventory-app.onrender.com"]
+        }},
         supports_credentials=True
     )
     app.register_blueprint(app_views)
