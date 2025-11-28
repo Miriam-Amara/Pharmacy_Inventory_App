@@ -10,6 +10,20 @@ export const AddProduct = ({setMode, setShowForm}) => (
   </button>
 );
 
+export const Pagination = ({pageSize, setPageSize}) => (
+  <>
+    <p>Show</p>
+    <input
+      type="number"
+      name="pageSize"
+      value={pageSize}
+      min={1}
+      onChange={(e) => {setPageSize(Number(e.target.value))}}
+    />
+    <p>entries</p>
+  </>
+);
+
 export const FilterProductByCategory = ({
   category, categories, handleFetchCategories, handleFetchFilteredProducts
 }) => (
@@ -52,27 +66,12 @@ export const FilterProductByBrand = ({
 
 export const SearchProduct = ({search, setSearch}) => (
   <>
-    <p>Search</p>
     <input
       type="text"
       name="search"
       value={search}
-      placeholder="Search product"
+      placeholder="Search product..."
       onChange={(e) => {setSearch(e.target.value)}}
     />
-  </>
-);
-
-export const Pagination = ({pageSize, setPageSize}) => (
-  <>
-    <p>Show</p>
-    <input
-      type="number"
-      name="pageSize"
-      value={pageSize}
-      min={1}
-      onChange={(e) => {setPageSize(Number(e.target.value))}}
-    />
-    <p>entries</p>
   </>
 );
