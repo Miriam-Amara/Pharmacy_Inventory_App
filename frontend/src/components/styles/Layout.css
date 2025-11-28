@@ -1,7 +1,23 @@
 
+.container{
+  height: 100vh;
+}
+
+.header{
+  padding: var(--space-xxs);
+  height: 7vh;
+  width: 100vw;
+  background-color: var(--color-primary);
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: center;
+  position: fixed;
+}
+
 .main-container{
-  height: 93%;
-  display: grid;
-  grid-template-columns: 0.7fr 3.3fr;
-  /* column-gap: var(--space-3xl); */
+  height: 100vh;
+  background-color: var(--color-grey);
+  display: flex;
+  overflow: hidden;
 }
