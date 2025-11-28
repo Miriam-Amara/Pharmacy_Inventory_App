@@ -1,7 +1,9 @@
 
 .sidebar-nav{
-  height: 100%;
-  padding: var(--space-md);
+  width: 15%;
+  margin-top: 6vh;
+  padding: var(--space-3xl) var(--space-md) var(--space-md) var(--space-md);
+  background-color: var(--color-white);
   display: flex;
   flex-direction: column;
   gap: var(--space-sm);
@@ -21,6 +23,10 @@
   line-height: var(--space-sm);
   padding-left: var(--space-lg);
   background-repeat: no-repeat;
+}
+
+.sidebar-nav div:hover{
+  padding-left: var(--space-sm);
 }
 
 .dashboard{
