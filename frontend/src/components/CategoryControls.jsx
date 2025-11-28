@@ -32,11 +32,11 @@ export const Pagination = ({pageSize, setPageSize}) => (
 export const SearchCategory = ({search, setSearch}) => {
   return (
     <>
-      <p>Search</p>
       <input
         type="text"
         name="search"
         value={search}
+        placeholder="Search categories..."
         onChange={(e) => {setSearch(e.target.value)}}
       />
     </>
