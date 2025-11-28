@@ -1,7 +1,7 @@
 import axios from "axios";
 
 const api = axios.create({
-  baseURL: "/api/v1",
+  baseURL: "https://pharmacy-inventory-app.onrender.com/api/v1",
   withCredentials: true, // important for session cookies
 });
 
