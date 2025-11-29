@@ -120,9 +120,9 @@ def setup_developement_database() -> str:
     return dev_database_url
 
 
-if os.getenv("ENV") == "development":
+if os.getenv("FLASK_ENV") == "development":
     database_url = setup_developement_database()
-elif os.getenv("ENV") == "test":
+elif os.getenv("FLASK_ENV") == "test":
     database_url = setup_test_database()
 else:
     database_url = setup_production_database()
