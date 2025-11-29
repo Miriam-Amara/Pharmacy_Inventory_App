@@ -17,4 +17,4 @@ RUN apt-get install libmagic1 -y
 EXPOSE 5000
 
 # Remember to Run the app with Gunicorn for production
-CMD ["python3", "-m", "api.v1.app"]
+CMD ["gunicorn", "-w", "2", "-b", "0.0.0.0:5000", "api.v1.app:app"]
