@@ -1,7 +1,7 @@
 services:
   backend:
     build: ./backend
-    container_name: pharmacy_backend
+    container_name: pharmacy_inventory_backend
     restart: always
     ports:
       - "80:5000"
@@ -9,10 +9,21 @@ services:
       - ./backend/.env
     depends_on:
       - db
+  
+  frontend:
+    container_name: pharmacy_inventory_frontend
+    build:
+      context: ./frontend
+      dockerfile: Dockerfile
+    volumes:
+      - ./frontend:/app
+    ports:
+      - "5173:5173"
+    command: ["npm", "run", "build"]
 
   db:
     image: postgres:15
-    container_name: pharmacy_db
+    container_name: pharmacy_inventory_db
     restart: always
     env_file:
       - ./backend/.env
