@@ -131,6 +131,37 @@ export const productValidationSchema = yup.object(
     // obj is the entire object with all fields
     return (obj.brand_id?.trim() || obj.brand_name?.trim());
   }
-)
+);
 
 
+export const purchaseOrderValidationSchema = yup.object({
+  supplier_name: yup.string()
+    .transform((value, originalValue) => (originalValue === "" ? null : value))
+    .max(200)
+    .nullable(),
+  status: yup.string()
+    .transform((value, originalValue) => (originalValue === "" ? null : value))
+    .oneOf(["pending", "in progress", "complete", "cancelled"],
+       "Status must be either pending, in progress, complete or cancelled"
+    )
+    .nullable(),
+  ordering_cost: yup.number()
+    .transform((value, originalValue) => (originalValue === '' ? undefined : value))
+    .moreThan(0, "ordering cost must be greater than zero.")
+    .required("Unit cost price is required."),
+  holding_cost_rate: yup.number()
+    .transform((value, originalValue) => (originalValue === '' ? undefined : value))
+    .moreThan(0, "ordering cost must be greater than zero.")
+    .nullable(),
+  created_at: yup.date()
+      .transform((value, originalValue) => (originalValue === "" ? null : value))
+      .nullable(),
+  last_updated: yup.date()
+    .transform((value, originalValue) => (originalValue === "" ? null : value))
+    .nullable(),
+});
+
+
+// export const purchaseValidationSchema({
+
+// });
