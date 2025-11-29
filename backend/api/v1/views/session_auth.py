@@ -27,6 +27,8 @@ def login():
     Logs in an employee and sets a session cookie.
     """
     session_duration = int(os.getenv("SESSION_DURATION", 0))
+    cookie_secure = bool(os.getenv("COOKIE_SECURE", "True"))
+
     if not session_duration:
         logger.error("No SESSION_DURATION environment variable")
         abort(500)
@@ -42,7 +44,7 @@ def login():
         key=cookie_name,
         value=session_id,
         max_age=session_duration,
-        secure=True,
+        secure=cookie_secure,
         httponly=True,
         samesite="None",
     )
