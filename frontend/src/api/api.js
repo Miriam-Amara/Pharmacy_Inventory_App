@@ -1,7 +1,9 @@
 import axios from "axios";
 
+const apiUrl = import.meta.env.VITE_API_URL;
+
 const api = axios.create({
-  baseURL: "https://pharmacy-inventory-app.onrender.com/api/v1",
+  baseURL: apiUrl + "/api/v1",
   withCredentials: true, // important for session cookies
 });
 
