@@ -6,7 +6,7 @@ Main Flask application setup for the Pharmacy API.
 
 # from apscheduler.schedulers.background import BackgroundScheduler
 from dotenv import load_dotenv
-from flask import Flask, abort, request, g, Response
+from flask import Flask, abort, request, g
 from flask_bcrypt import Bcrypt
 from flask_cors import CORS
 from typing import Any
@@ -29,11 +29,6 @@ logger = logging.getLogger(__name__)
 bcrypt = Bcrypt()
 auth = SessionDBAuth()
 
-
-ALLOWED_ORIGINS = [
-            "https://pharmacy-inventory-app.vercel.app",
-            "http://localhost:5173"
-        ]
 
 def check_authentication():
     """
@@ -77,10 +72,9 @@ def create_app(config_name: str | None=None) -> Flask:
     bcrypt.init_app(app) # type: ignore
     CORS(
         app,
-        resources={r"/api/v1/*": {
-            "origins": ["http://localhost:5173", "https://pharmacy-inventory-app.onrender.com"]
-        }},
-        allow_headers=["Content-Type", "Authorization", "X-Custom-Header"],
+        origins=["http://localhost:5173", "https://pharmacy-inventory-app.vercel.app"],
+        methods=["POST", "GET", "PUT", "DELETE", "OPTIONS"],
+        allow_headers=["Content-Type", "Authorization", "X-Requested-With"],
         supports_credentials=True
     )
     app.register_blueprint(app_views)
@@ -116,21 +110,6 @@ def create_app(config_name: str | None=None) -> Flask:
 
         # Return a generic response to the browser
         return "An internal server error occurred. Check server logs for details.", 500
-
-    @app.after_request
-    def force_cors_headers(response: Response): # type: ignore
-        # 1. Get the origin from the request headers
-        origin = request.headers.get('Origin')
-
-        # 2. Check if the requesting origin is in our allowed list
-        if origin and origin in ALLOWED_ORIGINS:
-            # 3. CRITICAL: Set the mandatory credentialed CORS headers
-            response.headers['Access-Control-Allow-Origin'] = origin
-            response.headers['Access-Control-Allow-Credentials'] = 'true'
-            response.headers['Access-Control-Allow-Headers'] = 'Content-Type, Authorization, X-Requested-With'
-            response.headers['Access-Control-Allow-Methods'] = 'GET, POST, PUT, DELETE, OPTIONS'
-
-        return response
     
     return app
 
