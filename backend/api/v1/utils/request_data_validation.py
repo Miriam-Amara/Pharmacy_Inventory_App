@@ -577,6 +577,7 @@ class PurchaseRegister(BaseModel):
     total_cost_price: Annotated[float, PositiveFloat]
     payment_status: PaymentStatus
     item_status: Optional[ItemStatus] = ItemStatus.pending
+    unit_selling_price: Optional[Annotated[float, PositiveFloat]] = None
 
 
 class PurchaseUpdate(BaseModel):
@@ -618,6 +619,7 @@ class PurchaseUpdate(BaseModel):
     total_cost_price: Optional[Annotated[float, PositiveFloat]] = None
     payment_status: Optional[PaymentStatus] = None
     item_status: Optional[ItemStatus] = None
+    unit_selling_price: Optional[Annotated[float, PositiveFloat]] = None
 
 
 class SaleOrderRegister(BaseModel):
